@@ -1,0 +1,1 @@
+web: gunicorn freds_list.wsgi --log-file -
