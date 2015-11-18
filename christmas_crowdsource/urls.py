@@ -13,10 +13,22 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+from christmas_crowdsource import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework.authtoken import views
+from django.contrib.auth.decorators import login_required
+from django.conf.urls.static import static
+from rest_framework.urlpatterns import format_suffix_patterns
+from django.views.decorators.cache import cache_page
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-]
+    # url(r'^christmas_lists/', include('christmas_lists.urls')),
+    # url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page':"/home/"}, name='logout'),
+    url(r'^api/', include('api.urls')),
+    # url('^', include('django.contrib.auth.urls')),
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'rest_framework.filters',
     'corsheaders',
     'users',
-    'fredslist',
+    'christmas_lists',
     'api',
 )
 
@@ -102,7 +102,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
 
 USE_I18N = True
 
