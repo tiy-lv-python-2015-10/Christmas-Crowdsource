@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'christmas_list',
         'USER': '',
         'PASSWORD': '',
-        'HOST': 'localhost',
+        'HOST': '',
         'PORT': ''
     }
 }
