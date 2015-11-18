@@ -1,6 +1,16 @@
 # Christmas List Crowdsource - Backend
 
 ## Description
+The overall project is basically a wish list generator.  
+* A user can create a list
+* The list owner can then share a link with friends and family
+* Visitors will be able to pledge to buy an item or pledge to pay for part of it
+* Once an item is fully pledged it becomes reserved 
+* The owner will never see what is reserved and what is not (we want it to be a surprise)
+* When a person pledges they will be prompted for a credit card which will be processed through stripe
+* When a list deadline passes the list is set to inactive and all partially funded items are refunded (otherwise it is embezzlement)
+
+
 As the backend your job in the group is to provide the front end with api endpoints they need.  On a simple level this should include the basic 5 verbs but will need to include other api end points as the need arises.  Your job will also be try try to keep your api clean and Restful.
 
 ## Details
