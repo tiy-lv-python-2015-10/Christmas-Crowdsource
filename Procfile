@@ -1,1 +1,1 @@
-web: gunicorn freds_list.wsgi --log-file -
+web: gunicorn christmas_crowdsource.wsgi --log-file -
