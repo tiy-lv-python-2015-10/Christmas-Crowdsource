@@ -30,12 +30,8 @@ from django.conf.urls import include
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'^christmas_lists/', include('christmas_lists.urls')),
-    # url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page':"/home/"}, name='logout'),
-    # url(r'/',include('api.urls')),
     url(r'^api/', include('api.urls')),
     # url(r'^login/', include('rest_framework.urls',namespace='rest_framework')),
     # url('^', include('django.contrib.auth.urls')),
-
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

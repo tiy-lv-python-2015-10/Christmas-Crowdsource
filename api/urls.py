@@ -5,6 +5,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
 from django.conf.urls import include
 
+
 urlpatterns = [
 
     url(r'^wishlists/(?P<pk>\d+)$', APIDetailUpdateWishList.as_view(), name='api_wishlist_detail_update'),

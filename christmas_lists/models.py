@@ -10,6 +10,9 @@ class WishList(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "{}".format(self.title)
+
 
 class Item(models.Model):
     wish_list = models.ForeignKey(WishList)
@@ -21,6 +24,16 @@ class Item(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "{}".format(self.title)
+
+    def remaining_price(self):
+        all_pledges = self.pledge_set.all()
+        total_pledge_amount = 0
+        for pledge in all_pledges:
+            total_pledge_amount += pledge.pledge_amount
+
+
 
 class Pledge(models.Model):
     user = models.ForeignKey(User)
@@ -29,14 +42,19 @@ class Pledge(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "{}".format(self.pledge_amount)
+
+
+
 # user
 # list creator
 # pledger
 
 
 
-# crud items
-# crud list
+
+
 # list_creator cant see pledgers
 
 
