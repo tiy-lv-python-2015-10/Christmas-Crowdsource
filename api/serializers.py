@@ -16,11 +16,14 @@ class WishListSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+    pledges = PledgeSerializer(many=True, read_only=True)
+
     class Meta:
         model = Item
         fields = ('id', 'wish_list', 'title', 'description', 'price',
-                  'source_url', 'image_url', 'created_at', 'pledge_set',
+                  'source_url', 'image_url', 'created_at', 'pledges',
                   'total_pledged', 'amount_needed')
+
 
 
 class PledgeSerializer(serializers.ModelSerializer):
