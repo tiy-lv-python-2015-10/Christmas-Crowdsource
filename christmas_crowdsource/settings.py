@@ -87,10 +87,10 @@ WSGI_APPLICATION = 'christmas_crowdsource.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'christmas_list',
-        'USER': '',
+        'NAME': 'christmas_crowdsource',
+        'USER': 'peterflynn',
         'PASSWORD': '',
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': ''
     }
 }
