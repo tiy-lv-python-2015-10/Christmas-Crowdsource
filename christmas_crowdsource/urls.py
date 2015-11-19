@@ -13,6 +13,8 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+from api.views import APIDetailUpdateWishList, APIListCreateWishList, APIDetailUpdateItem, APIListCreateItem, \
+    APIDetailUpdatePledge, APIListCreatePledge
 from christmas_crowdsource import settings
 from django.conf.urls import include, url
 from django.contrib import admin
@@ -31,8 +33,14 @@ urlpatterns = [
     # url(r'^christmas_lists/', include('christmas_lists.urls')),
     # url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page':"/home/"}, name='logout'),
     # url(r'/',include('api.urls')),
+    url(r'^api/wishlist/(?P<pk>\d+)$', APIDetailUpdateWishList.as_view(), name='api_wishlist_detail_update'),
+    url(r'^api/wishlist/$', APIListCreateWishList.as_view(), name='api_wishlist_list_create'),
+    url(r'^api/item/(?P<pk>\d+)$', APIDetailUpdateItem.as_view(), name='api_item_detail_update'),
+    url(r'^api/item/$', APIListCreateItem.as_view(), name='api_item_list_create'),
+    url(r'^api/pledge/(?P<pk>\d+)$', APIDetailUpdatePledge.as_view(), name='api_pledge_detail_update'),
+    url(r'^api/pledge/$', APIListCreatePledge.as_view(), name='api_pledge_list_create'),
     url(r'^api-token-auth/', views.obtain_auth_token),
-    url(r'^login/', include('rest_framework.urls',namespace='rest_framework')),
+    # url(r'^login/', include('rest_framework.urls',namespace='rest_framework')),
     # url('^', include('django.contrib.auth.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
