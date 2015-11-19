@@ -25,6 +25,18 @@ class Item(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def total_pledged(self):
+        total = 0
+        for pledge in self.pledge_set.all():
+            total += pledge.amount
+        return total
+
+    @property
+    def amount_needed(self):
+        return self.price - self.total_pledged
+
+
 class Pledge(models.Model):
     user = models.ForeignKey(User)
     item = models.ForeignKey(Item)
