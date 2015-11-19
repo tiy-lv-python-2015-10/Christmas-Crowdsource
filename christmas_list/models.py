@@ -8,6 +8,9 @@ class WishList(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "{}'s wishlist".format(self.user.username)
+
 
 class Item(models.Model):
     wish_list = models.ForeignKey(WishList)
@@ -19,8 +22,14 @@ class Item(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+
 class Pledge(models.Model):
     user = models.ForeignKey(User)
     item = models.ForeignKey(Item)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     pledged_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}'s pledge: ${}".format(self.user, self.amount)
