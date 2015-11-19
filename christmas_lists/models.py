@@ -32,6 +32,8 @@ class Item(models.Model):
         total_pledge_amount = 0
         for pledge in all_pledges:
             total_pledge_amount += pledge.pledge_amount
+        return total_pledge_amount
+
 
 
 
