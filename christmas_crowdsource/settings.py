@@ -43,8 +43,9 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'christmas_list',
     'users',
-    'api'
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (
