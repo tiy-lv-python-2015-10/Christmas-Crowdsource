@@ -21,13 +21,18 @@ from django.contrib.auth.decorators import login_required
 from django.conf.urls.static import static
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.views.decorators.cache import cache_page
+from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.authtoken import views
+from django.conf.urls import include
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     # url(r'^christmas_lists/', include('christmas_lists.urls')),
     # url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page':"/home/"}, name='logout'),
-    url(r'^api/', include('api.urls')),
+    # url(r'/',include('api.urls')),
+    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^login/', include('rest_framework.urls',namespace='rest_framework')),
     # url('^', include('django.contrib.auth.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
