@@ -15,6 +15,12 @@ class WishListSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'title', 'expiration', 'created_at')
 
 
+class PledgeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pledge
+        fields = ('id', 'user', 'item', 'amount', 'pledged_at')
+
+
 class ItemSerializer(serializers.ModelSerializer):
     pledges = PledgeSerializer(many=True, read_only=True)
 
@@ -26,8 +32,5 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 
-class PledgeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pledge
-        fields = ('id', 'user', 'item', 'amount', 'pledged_at')
+
 
