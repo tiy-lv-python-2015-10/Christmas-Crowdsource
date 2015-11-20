@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from users.views import UserCharge
+# from users.views import UserCharge
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('api.urls')),
-    url(r'^donate/$', UserCharge.as_view()),
+    # url(r'^donate/$', UserCharge.as_view()),
 ]
