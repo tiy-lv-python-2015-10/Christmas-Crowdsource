@@ -7,6 +7,7 @@ class WishList(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=50, null=True, blank=True)
     expiration = models.DateField()
+    is_expired = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -45,6 +46,8 @@ class Pledge(models.Model):
     user = models.ForeignKey(User)
     item = models.ForeignKey(Item)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    charge_id = models.CharField(max_length=50, null=True)
+    is_refunded = models.BooleanField(default=False)
     pledged_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

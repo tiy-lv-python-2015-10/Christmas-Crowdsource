@@ -13,6 +13,7 @@ class ListUsers(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAdminUser, )
 
+
 class CreateUser(generics.CreateAPIView):
     serializer_class = UserSerializer
 

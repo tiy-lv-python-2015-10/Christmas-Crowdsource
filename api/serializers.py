@@ -71,4 +71,4 @@ class WishListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishList
         fields = ('id', 'user', 'title', 'expiration', 'item_set')
-        read_only_fields = ('id', 'user')
+        read_only_fields = ('id', 'user', 'item_set')
