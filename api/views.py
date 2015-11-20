@@ -50,3 +50,4 @@ class DetailUpdatePledge(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PledgeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
+
