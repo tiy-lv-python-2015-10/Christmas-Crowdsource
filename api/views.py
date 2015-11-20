@@ -8,10 +8,13 @@ from django.shortcuts import render
 from rest_framework import generics
 
 
-class ListUsers(generics.ListCreateAPIView):
+class ListUsers(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAdminUser, )
 
+class CreateUser(generics.CreateAPIView):
+    serializer_class = UserSerializer
 
 class ListCreateWishLists(generics.ListCreateAPIView):
     queryset = WishList.objects.all()
