@@ -48,8 +48,7 @@ class DetailUpdateWishList(generics.RetrieveUpdateDestroyAPIView):
 class DetailUpdateItem(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 class DetailUpdatePledge(generics.RetrieveUpdateDestroyAPIView):
