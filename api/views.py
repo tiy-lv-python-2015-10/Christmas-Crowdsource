@@ -13,19 +13,23 @@ class ListUsers(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
 
-class ListWishLists(generics.ListCreateAPIView):
+class ListCreateWishLists(generics.ListCreateAPIView):
     queryset = WishList.objects.all()
     serializer_class = WishListSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
 
-class ListItems(generics.ListCreateAPIView):
+
+class ListCreateItems(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
 
-class ListPledges(generics.ListCreateAPIView):
+class ListCreatePledges(generics.ListCreateAPIView):
     queryset = Pledge.objects.all()
     serializer_class = PledgeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )

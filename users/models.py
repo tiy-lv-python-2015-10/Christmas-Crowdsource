@@ -10,4 +10,3 @@ class Profile(models.Model):
     city = models.CharField(max_length=30, null=True, blank=True)
     state = models.CharField(max_length=10, null=True, blank=True)
     zip = models.CharField(max_length=10, null=True, blank=True)
-
