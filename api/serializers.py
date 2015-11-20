@@ -38,26 +38,16 @@ class UserSerializer(serializers.ModelSerializer):
         )
         return user
 
+
 class PledgeSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Pledge
         fields = ('id', 'user', 'item', 'amount')
         read_only_fields = ('id', 'user')
 
+class ShortItemSerializer(serializers.ModelSerializer):
 
-class ItemSerializer(serializers.ModelSerializer):
-    pledge_set = PledgeSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Item
-        fields = ('id', 'wish_list', 'title', 'description', 'price',
-                  'source_url', 'image_url', 'pledge_set',
-                  'total_pledged', 'amount_needed')
-        read_only_fields = ('id', 'total_pledged',
-                            'amount_needed')
-
-
-class ShortItemSerializer(ItemSerializer):
     class Meta:
         model = Item
         fields = ('id', 'title', 'price', 'image_url', 'total_pledged',
@@ -72,3 +62,23 @@ class WishListSerializer(serializers.ModelSerializer):
         model = WishList
         fields = ('id', 'user', 'title', 'expiration', 'item_set')
         read_only_fields = ('id', 'user', 'item_set')
+
+
+class ItemSerializer(serializers.ModelSerializer):
+    pledge_set = PledgeSerializer(many=True, read_only=True)
+    user = serializers.SerializerMethodField()
+
+    def get_user(self, obj):
+        return obj.wish_list.user.username
+
+    class Meta:
+        model = Item
+        fields = ('id', 'wish_list', 'user', 'title', 'description', 'price',
+                  'source_url', 'image_url', 'pledge_set',
+                  'total_pledged', 'amount_needed')
+        read_only_fields = ('id', 'total_pledged',
+                            'amount_needed')
+
+
+
+

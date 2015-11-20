@@ -17,6 +17,7 @@ class ListUsers(generics.ListAPIView):
 class CreateUser(generics.CreateAPIView):
     serializer_class = UserSerializer
 
+
 class ListCreateWishLists(generics.ListCreateAPIView):
     queryset = WishList.objects.all()
     serializer_class = WishListSerializer
