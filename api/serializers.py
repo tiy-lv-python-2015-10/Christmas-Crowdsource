@@ -6,6 +6,7 @@ class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishList
         fields = ('title','list_url', 'expiration_date', 'user', 'created_at', 'modified_at')
+        read_only_fields = ('user', 'created_at', 'modified_at')
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -13,9 +14,11 @@ class ItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = ('wish_list', 'item_url', 'image_url', 'title', 'description', 'price',
                   'pledge_total', 'created_at', 'modified_at')
+        read_only_fields = ('pledge_total', 'created_at', 'modified_at')
 
 
 class PledgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pledge
         fields = ('user', 'item', 'pledge_amount', 'created_at', 'modified_at')
+        read_only_fields = ('user', 'created_at', 'modified_at')
