@@ -38,14 +38,6 @@ class UserSerializer(serializers.ModelSerializer):
         )
         return user
 
-
-class WishListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WishList
-        fields = ('id', 'user', 'title', 'expiration')
-        read_only_fields = ('id', 'user')
-
-
 class PledgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pledge
@@ -63,3 +55,20 @@ class ItemSerializer(serializers.ModelSerializer):
                   'total_pledged', 'amount_needed')
         read_only_fields = ('id', 'total_pledged',
                             'amount_needed')
+
+
+class ShortItemSerializer(ItemSerializer):
+    class Meta:
+        model = Item
+        fields = ('id', 'title', 'price', 'image_url', 'total_pledged',
+                  'amount_needed')
+        read_ony_fields = ('__all__')
+
+
+class WishListSerializer(serializers.ModelSerializer):
+    item_set = ShortItemSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = WishList
+        fields = ('id', 'user', 'title', 'expiration', 'item_set')
+        read_only_fields = ('id', 'user')
