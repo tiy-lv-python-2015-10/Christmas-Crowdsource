@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Sum
+
 
 class WishList(models.Model):
     user = models.ForeignKey(User)
@@ -27,10 +29,12 @@ class Item(models.Model):
 
     @property
     def total_pledged(self):
-        total = 0
-        for pledge in self.pledge_set.all():
-            total += pledge.amount
+        total = self.pledge_set.all().aggregate(Sum('amount'))['amount__sum']
+        if not total:
+            return 0
+
         return total
+
 
     @property
     def amount_needed(self):
