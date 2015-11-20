@@ -1,5 +1,8 @@
+
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Sum
+from django.utils import timezone
 
 # Create your models here.
 class WishList(models.Model):
@@ -27,12 +30,34 @@ class Item(models.Model):
     def __str__(self):
         return "{}".format(self.title)
 
-    def remaining_price(self):
+    # # @property
+    # # def total_pledge(self):
+    #     all_pledges = self.pledge_set.all()
+    #     total_pledge_amount = 0
+    #     for pledge in all_pledges:
+    #         total_pledge_amount += pledge.pledge_amount
+    #     return total_pledge_amount
+
+    @property
+    def pledge_total(self):
+        # agg = self.objects.aggregate(total_sum=Sum('pledge__pledge_amount'))
+        # return agg.get('total_sum', None)
         all_pledges = self.pledge_set.all()
         total_pledge_amount = 0
         for pledge in all_pledges:
             total_pledge_amount += pledge.pledge_amount
         return total_pledge_amount
+
+
+    @property
+    def active_state(self):
+        active = True
+        today_date = timezone.now()
+        if self.total_pledge < self.price and today_date > self.wish_list.expiration_date:
+            active = False
+        return active
+
+
 
 
 

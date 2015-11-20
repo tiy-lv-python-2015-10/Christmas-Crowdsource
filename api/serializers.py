@@ -11,7 +11,8 @@ class WishlistSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ('wish_list', 'item_url', 'image_url', 'title', 'description', 'price', 'created_at', 'modified_at')
+        fields = ('wish_list', 'item_url', 'image_url', 'title', 'description', 'price',
+                  'pledge_total', 'created_at', 'modified_at')
 
 
 class PledgeSerializer(serializers.ModelSerializer):
