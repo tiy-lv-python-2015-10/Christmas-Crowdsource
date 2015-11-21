@@ -26,6 +26,7 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=9, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    reserved = False
 
     def __str__(self):
         return "{}".format(self.title)
@@ -53,9 +54,11 @@ class Item(models.Model):
     def active_state(self):
         active = True
         today_date = timezone.now()
-        if self.total_pledge < self.price and today_date > self.wish_list.expiration_date:
-            active = False
-        return active
+        # if self.pledge_total > self.price or today_date > self.wish_list.expiration_date:
+        # if self.pledge_total > self.price
+        if today_date > self.wish_list.expiration_date:
+            self.active = False
+        return self.active
 
 
 

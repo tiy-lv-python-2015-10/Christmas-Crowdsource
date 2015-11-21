@@ -8,7 +8,7 @@ class WishlistAdmin(admin.ModelAdmin):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('wish_list','item_url','image_url','title','description','price', 'created_at', 'modified_at')
+    list_display = ('wish_list','item_url','image_url','title','description','price','pledge_total', 'created_at', 'modified_at')
 
 @admin.register(Pledge)
 class PledgeAdmin(admin.ModelAdmin):
