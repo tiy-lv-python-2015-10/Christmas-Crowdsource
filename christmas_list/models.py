@@ -15,7 +15,7 @@ class WishList(models.Model):
 
     def __str__(self):
         if self.title:
-            return "{}'s {} wishlist".format(self.user.username, self.title)
+            return "{}'s {}".format(self.user.username, self.title)
         return "{}'s wishlist".format(self.user.username)
 
     def close(self):
