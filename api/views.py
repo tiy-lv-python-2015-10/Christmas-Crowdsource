@@ -11,7 +11,7 @@ from rest_framework import generics
 class ListUsers(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAdminUser, )
+    # permission_classes = (permissions.IsAdminUser, )
 
 
 class CreateUser(generics.CreateAPIView):
@@ -21,41 +21,55 @@ class CreateUser(generics.CreateAPIView):
 class ListCreateWishLists(generics.ListCreateAPIView):
     queryset = WishList.objects.all()
     serializer_class = WishListSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     def perform_create(self, serializer):
         user = self.request.user
         serializer.save(user=user)
 
+    def get_queryset(self):
+        qs =  super().get_queryset()
+        user_id = self.request.query_params.get('user-id', None)
+        if user_id:
+            qs = qs.filter(user__id=user_id)
+        return qs
+
 
 class ListCreateItems(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
 
 class ListCreatePledges(generics.ListCreateAPIView):
     queryset = Pledge.objects.all()
     serializer_class = PledgeSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    def get_queryset(self):
+        qs =  super().get_queryset()
+        user_id = self.request.query_params.get('user-id', None)
+        if user_id:
+            qs = qs.filter(user__id=user_id)
+        return qs
 
 
 class DetailUpdateWishList(generics.RetrieveUpdateDestroyAPIView):
     queryset = WishList.objects.all()
     serializer_class = WishListSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+    #                       IsOwnerOrReadOnly)
 
 
 class DetailUpdateItem(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 class DetailUpdatePledge(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pledge.objects.all()
     serializer_class = PledgeSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+    #                       IsOwnerOrReadOnly)
 

@@ -78,7 +78,3 @@ class ItemSerializer(serializers.ModelSerializer):
                   'total_pledged', 'amount_needed')
         read_only_fields = ('id', 'total_pledged',
                             'amount_needed')
-
-
-
-
