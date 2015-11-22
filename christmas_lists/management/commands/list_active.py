@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from christmas_lists.models import Item
+from christmas_lists.models import Item, WishList
+from django.utils import timezone
 
 
 class Command(BaseCommand):
@@ -7,13 +8,17 @@ class Command(BaseCommand):
     help = 'Django admin custom command poc.'
 
     def handle(self, *args, **options):
-        al_items = Item.objects.all()
-        for item in al_items:
-            active = item.active_state
-            if active == True and item.pledge_total > item.price:
-                self.stdout.write("{} is reserved".format(item.wish_list.title))
-                item.reserved = True
+        ###check is wishlist is expired
+        all_lists = WishList.objects.all()
+        for wishlist in all_lists:
+            time_left = wishlist.expiration_date - timezone.now()
+            if timezone.now() > wishlist.expiration_date:
+                self.stdout.write("{} is expired it still has {} ".format(wishlist.title))
+                wishlist.expired = True
             else:
-                self.stdout.write("{} is not reserved".format(item.wish_list.title))
-                item.reserved = False
+                self.stdout.write("{} is not expired. It still has {} until it does".format(wishlist.title, time_left))
+
+
+
+
 

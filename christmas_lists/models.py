@@ -9,6 +9,7 @@ class WishList(models.Model):
     title = models.CharField(max_length=255)
     list_url = models.URLField(max_length=255)
     expiration_date = models.DateTimeField()
+    expired = False
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -31,36 +32,14 @@ class Item(models.Model):
     def __str__(self):
         return "{}".format(self.title)
 
-    # # @property
-    # # def total_pledge(self):
-    #     all_pledges = self.pledge_set.all()
-    #     total_pledge_amount = 0
-    #     for pledge in all_pledges:
-    #         total_pledge_amount += pledge.pledge_amount
-    #     return total_pledge_amount
 
     @property
     def pledge_total(self):
-        # agg = self.objects.aggregate(total_sum=Sum('pledge__pledge_amount'))
-        # return agg.get('total_sum', None)
         all_pledges = self.pledge_set.all()
         total_pledge_amount = 0
         for pledge in all_pledges:
             total_pledge_amount += pledge.pledge_amount
         return total_pledge_amount
-
-
-    @property
-    def active_state(self):
-        active = True
-        today_date = timezone.now()
-        # if self.pledge_total > self.price or today_date > self.wish_list.expiration_date:
-        # if self.pledge_total > self.price
-        if today_date > self.wish_list.expiration_date:
-            self.active = False
-        return self.active
-
-
 
 
 
