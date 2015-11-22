@@ -14,6 +14,8 @@ class WishList(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        if self.title:
+            return "{}'s {} wishlist".format(self.user.username, self.title)
         return "{}'s wishlist".format(self.user.username)
 
     def close(self):
