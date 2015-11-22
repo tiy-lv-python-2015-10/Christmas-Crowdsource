@@ -13,7 +13,7 @@ env:
   - DJANGO=1.8.6
 
 before_install:
-  - export DJANGO_SETTINGS_MODULE=freds_list.travis-settings
+  - export DJANGO_SETTINGS_MODULE=christmas_crowdsource.travis-settings
   - export PYTHONPATH=$HOME/builds/cesarmarroquin/christmas_crowdsource
   - export PIP_USE_MIRRORS=true
 

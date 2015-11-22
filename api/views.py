@@ -18,7 +18,7 @@ class APIListCreateWishList(generics.ListCreateAPIView):
     queryset = WishList.objects.order_by('-created_at')
     serializer_class = WishlistSerializer
     pagination_class = SmallPagination
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     # search_fields = ('posting_title', 'specific_location', 'posting_body')
 
@@ -40,7 +40,7 @@ class APIListCreateItem(generics.ListCreateAPIView):
     queryset = Item.objects.order_by('-created_at')
     serializer_class = ItemSerializer
     pagination_class = SmallPagination
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     # search_fields = ('posting_title', 'specific_location', 'posting_body')
 
@@ -62,7 +62,7 @@ class APIListCreatePledge(generics.ListCreateAPIView):
     queryset = Pledge.objects.order_by('-created_at')
     serializer_class = PledgeSerializer
     pagination_class = SmallPagination
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     # search_fields = ('posting_title', 'specific_location', 'posting_body')
 
