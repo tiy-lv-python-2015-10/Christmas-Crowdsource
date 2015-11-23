@@ -22,12 +22,10 @@ install:
 
 before_script:
   - psql -c "CREATE DATABASE christmas_list;" -U postgres
-#  - python manage.py migrate
+  - python manage.py migrate
 
 script:
-  - python manage.py migrate
-#  - coverage run --source='.' manage.py test users christmas_list api
+  - coverage run --source='.' manage.py test users christmas_list api
 
 after_success:
-  - python manage.py test
-#  - coveralls
+  - coveralls
