@@ -18,7 +18,7 @@ class APIListCreateWishList(generics.ListCreateAPIView):
     queryset = WishList.objects.order_by('-created_at')
     serializer_class = WishlistSerializer
     pagination_class = SmallPagination
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     # search_fields = ('posting_title', 'specific_location', 'posting_body')
 
