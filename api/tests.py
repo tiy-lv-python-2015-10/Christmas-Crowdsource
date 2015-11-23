@@ -125,7 +125,7 @@ class ItemTests(APITestCase):
         url = reverse('api_list_create_items')
         self.client.force_authenticate(user=self.user)
         data = {
-            'wish_list': 1,
+            'wish_list': self.wishlist.id,
             'title': 'testItem2',
             'price': 75,
             'source_url': 'http://www.something.com'
