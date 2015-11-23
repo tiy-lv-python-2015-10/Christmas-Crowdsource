@@ -6,7 +6,7 @@ class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishList
         fields = ('title','list_url', 'expiration_date','expired', 'user', 'created_at', 'modified_at')
-        read_only_fields = ('user', 'created_at', 'modified_at')
+        read_only_fields = ('user', 'created_at', 'modified_at', 'expired', 'created_at', 'modified_at')
 
 
 class ItemSerializer(serializers.ModelSerializer):
