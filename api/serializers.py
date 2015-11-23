@@ -5,6 +5,7 @@ from christmas_lists.models import WishList, Item, Pledge
 class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishList
+        user = serializers.ReadOnlyField(source='user.id')
         fields = ('title','list_url', 'expiration_date','expired', 'user', 'created_at', 'modified_at')
         read_only_fields = ('user', 'created_at', 'modified_at', 'expired', 'created_at', 'modified_at')
 
