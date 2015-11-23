@@ -34,8 +34,7 @@ class APIListCreateWishList(generics.ListCreateAPIView):
 class APIDetailUpdateWishList(generics.RetrieveUpdateDestroyAPIView):
     queryset = WishList.objects.all()
     serializer_class = WishlistSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly)
+    permission_classes = (IsOwnerOrReadOnly,)
 
 
 
@@ -56,8 +55,7 @@ class APIListCreateItem(generics.ListCreateAPIView):
 class APIDetailUpdateItem(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly)
+    permission_classes = (IsOwnerOrReadOnly,)
 
 
 
@@ -87,7 +85,9 @@ class APIListCreatePledge(generics.ListCreateAPIView):
         except stripe.error.CardError:
            pass
 
-        serializer.save()
+
+
+        serializer.save(charge_id=charge_id)
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -115,5 +115,4 @@ class APIListCreatePledge(generics.ListCreateAPIView):
 class APIDetailUpdatePledge(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pledge.objects.all()
     serializer_class = PledgeSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly)
+    permission_classes = (IsOwnerOrReadOnly,)

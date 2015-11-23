@@ -26,11 +26,12 @@ from django.views.decorators.cache import cache_page
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
 from django.conf.urls import include
-
+from users.views import UserCharge
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('api.urls')),
+    url(r'^charge/$', UserCharge.as_view()),
     # url(r'^login/', include('rest_framework.urls',namespace='rest_framework')),
     # url('^', include('django.contrib.auth.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

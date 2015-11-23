@@ -9,10 +9,13 @@ class WishList(models.Model):
     title = models.CharField(max_length=255)
     list_url = models.URLField(max_length=255)
     expiration_date = models.DateField(date.today)
-    expired = False
+    expired = models.BooleanField(default=False)
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+    def close(self):
+        self.expired = True
 
     def __str__(self):
         return "{}".format(self.title)
@@ -48,8 +51,12 @@ class Pledge(models.Model):
     user = models.ForeignKey(User)
     item = models.ForeignKey(Item)
     pledge_amount = models.DecimalField(max_digits=9, decimal_places=2)
+    charge_id = models.CharField(max_length=255, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+    # def refund(self):
+
 
     def __str__(self):
         return "{}".format(self.pledge_amount)
