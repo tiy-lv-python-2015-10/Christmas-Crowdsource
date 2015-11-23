@@ -21,3 +21,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIR = (
     os.path.join(BASE_DIR, 'static')
 )
+
+STRIPE_API_KEY = os.environ['STRIPE_API_KEY']
