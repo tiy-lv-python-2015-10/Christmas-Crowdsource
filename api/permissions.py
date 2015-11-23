@@ -9,8 +9,3 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         return obj.user == request.user
-
-
-class IsOwnerHideProgress(permissions.BasePermission):
-
-   pass

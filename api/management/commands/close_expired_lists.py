@@ -14,7 +14,7 @@ class Command(BaseCommand):
         """
         count = 0
         for wishlist in WishList.objects.all():
-            if wishlist.expiration < date.today():
+            if wishlist.expiration <= date.today() and not wishlist.is_expired:
                 wishlist.close()
                 count += 1
 

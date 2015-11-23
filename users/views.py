@@ -17,21 +17,21 @@ class UserCharge(View):
         token = self.request.POST['stripeToken']
         amount = float(self.request.POST['amount']) * 100
         amount = int(amount)
-
-        # Create the charge on Stripe's servers - this will charge the user's card
-        try:
-          charge = stripe.Charge.create(
-              amount=amount,
-              currency="usd",
-              source=token,
-              description="Example charge"
-          )
-          item = Item.objects.get(pk=1)
-          Pledge.objects.create(user=self.request.user, amount=amount/100,
-                                item=item)
-
-        except stripe.error.CardError as e:
-          # The card has been declined
-          pass
+        #
+        # # Create the charge on Stripe's servers - this will charge the user's card
+        # try:
+        #   charge = stripe.Charge.create(
+        #       amount=amount,
+        #       currency="usd",
+        #       source=token,
+        #       description="Example charge"
+        #   )
+        #   item = Item.objects.get(pk=1)
+        #   Pledge.objects.create(user=self.request.user, amount=amount/100,
+        #                         item=item)
+        #
+        # except stripe.error.CardError as e:
+        #   # The card has been declined
+        #   pass
 
         return render(self.request, 'users/donate.html')

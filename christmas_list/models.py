@@ -15,13 +15,15 @@ class WishList(models.Model):
 
     def __str__(self):
         if self.title:
-            return "{}'s {}".format(self.user.username, self.title)
+            return self.title
         return "{}'s wishlist".format(self.user.username)
 
     def close(self):
-        self.is_expired = True
         for item in self.item_set.all():
             item.refund_pledges()
+        self.is_expired = True
+        self.save()
+
 
 class Item(models.Model):
     wish_list = models.ForeignKey(WishList)
@@ -31,6 +33,7 @@ class Item(models.Model):
     source_url = models.URLField()
     image_url = models.URLField(null=True, blank=True)
     is_funded = models.BooleanField(default=False)
+    is_closed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -53,6 +56,8 @@ class Item(models.Model):
         if not self.is_funded:
             for pledge in self.pledge_set.all():
                 pledge.refund()
+        self.is_closed = True
+        self.save()
 
 class Pledge(models.Model):
     user = models.ForeignKey(User)
@@ -70,3 +75,5 @@ class Pledge(models.Model):
         stripe.Refund.create(
           charge=self.charge_id
         )
+        self.is_refunded = True
+        self.save()

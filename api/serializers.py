@@ -1,6 +1,7 @@
 from christmas_list.models import WishList, Item, Pledge
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.relations import StringRelatedField
 from users.models import Profile
 
 
@@ -44,15 +45,16 @@ class ShortItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = ('id', 'title', 'price', 'image_url', 'total_pledged',
                   'amount_needed')
-        read_ony_fields = ('__all__')
+        read_ony_fields = '__all__'
+
 
 class PledgeSerializer(serializers.ModelSerializer):
-    item = ShortItemSerializer(many=False)
+    item = StringRelatedField()
 
     class Meta:
         model = Pledge
-        fields = ('id', 'user', 'item', 'amount')
-        read_only_fields = ('id', 'user')
+        fields = ('id', 'user', 'item', 'amount', 'charge_id')
+        read_only_fields = '__all__'
 
 
 class WishListSerializer(serializers.ModelSerializer):
@@ -74,7 +76,16 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'wish_list', 'user', 'title', 'description', 'price',
-                  'source_url', 'image_url', 'pledge_set',
-                  'total_pledged', 'amount_needed')
+                  'source_url', 'image_url',
+                  'total_pledged', 'amount_needed', 'pledge_set')
         read_only_fields = ('id', 'total_pledged',
                             'amount_needed')
+
+
+class CreatePledgeSerializer(serializers.ModelSerializer):
+
+    token = serializers.CharField(read_only=True)
+    
+    class Meta:
+        model = Pledge
+        fields = ('amount', 'token')
