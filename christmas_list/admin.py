@@ -9,7 +9,7 @@ class WishListAdmin(admin.ModelAdmin):
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id', 'wish_list', 'title', 'description', 'price',
-                    'source_url', 'image_url', 'is_funded',
+                    'source_url', 'is_funded', 'image_url',
                     'is_closed', 'created_at')
 
 @admin.register(Pledge)

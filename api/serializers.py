@@ -53,7 +53,7 @@ class PledgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pledge
-        fields = ('id', 'user', 'item', 'amount', 'charge_id')
+        fields = ('id', 'user', 'item', 'amount', 'charge_id', 'is_refunded')
         read_only_fields = '__all__'
 
 
@@ -62,8 +62,9 @@ class WishListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WishList
-        fields = ('id', 'user', 'title', 'expiration', 'item_set')
-        read_only_fields = ('id', 'user', 'item_set')
+        fields = ('id', 'user', 'title', 'expiration', 'item_set',
+                  'is_expired')
+        read_only_fields = ('id', 'user', 'item_set', 'is_expired')
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -76,10 +77,10 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'wish_list', 'user', 'title', 'description', 'price',
-                  'source_url', 'image_url',
+                  'source_url', 'image_url', 'is_funded', 'is_closed'
                   'total_pledged', 'amount_needed', 'pledge_set')
         read_only_fields = ('id', 'total_pledged',
-                            'amount_needed')
+                            'amount_needed', 'is_funded', 'is_closed')
 
 
 class CreatePledgeSerializer(serializers.ModelSerializer):
