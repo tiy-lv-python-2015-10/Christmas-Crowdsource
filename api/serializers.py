@@ -77,10 +77,10 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'wish_list', 'user', 'title', 'description', 'price',
-                  'source_url', 'image_url', 'is_funded', 'is_closed'
+                  'source_url', 'image_url',
                   'total_pledged', 'amount_needed', 'pledge_set')
         read_only_fields = ('id', 'total_pledged',
-                            'amount_needed', 'is_funded', 'is_closed')
+                            'amount_needed', )
 
 
 class CreatePledgeSerializer(serializers.ModelSerializer):
