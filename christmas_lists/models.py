@@ -1,4 +1,4 @@
-
+from datetime import date
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Sum
@@ -8,7 +8,7 @@ from django.utils import timezone
 class WishList(models.Model):
     title = models.CharField(max_length=255)
     list_url = models.URLField(max_length=255)
-    expiration_date = models.DateTimeField()
+    expiration_date = models.DateField(date.today)
     expired = False
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
