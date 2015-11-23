@@ -6,12 +6,16 @@ from users.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    """One to One with User
+
+    """
     class Meta:
         model = Profile
         exclude = ('user',)
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """Optional Profile, but empty profile {} must be sent in JSON"""
     profile = ProfileSerializer()
 
     class Meta:
@@ -39,8 +43,9 @@ class UserSerializer(serializers.ModelSerializer):
         )
         return user
 
-class ShortItemSerializer(serializers.ModelSerializer):
 
+class ShortItemSerializer(serializers.ModelSerializer):
+    """Shorter serializer for display with WishList"""
     class Meta:
         model = Item
         fields = ('id', 'title', 'price', 'image_url', 'is_funded',
@@ -49,6 +54,7 @@ class ShortItemSerializer(serializers.ModelSerializer):
 
 
 class PledgeSerializer(serializers.ModelSerializer):
+    """Pledge Serializer for display"""
     item = StringRelatedField()
 
     class Meta:
@@ -84,6 +90,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class CreatePledgeSerializer(serializers.ModelSerializer):
+    """For Create Pledges; takes a Stripe Token"""
 
     token = serializers.CharField(read_only=True)
     

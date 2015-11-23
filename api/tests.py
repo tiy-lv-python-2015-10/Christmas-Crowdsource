@@ -30,6 +30,7 @@ class UserList(APITestCase):
         self.assertEqual(User.objects.count(), 2)
         self.assertEqual(response.data['username'], 'bob')
 
+
 class WishListTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='joe',
@@ -38,6 +39,7 @@ class WishListTests(APITestCase):
         self.wishlist = WishList.objects.create(user=self.user,
                                                 expiration='2015-12-25',
                                                 title='Xmas list')
+
     def test_wishlist_list(self):
         url = reverse('api_list_create_wishlists')
         response = self.client.get(url, {}, format='json')
@@ -80,9 +82,10 @@ class WishListTests(APITestCase):
         url = reverse('api_detail_update_wishlist',
                       kwargs={'pk': self.wishlist.id})
         self.client.force_authenticate(user=self.user)
-        response = self.client.put(url, {"title": "New Title",
-                                         "expiration": "2015-12-26"},
-                                          format='json')
+        response = self.client.put(url,
+                                   {"title": "New Title",
+                                    "expiration": "2015-12-26"},
+                                   format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['title'], 'New Title')
 
@@ -110,7 +113,6 @@ class ItemTests(APITestCase):
             source_url='http://www.google.com'
         )
 
-
     def test_item_list(self):
         url = reverse('api_list_create_items')
         response = self.client.get(url, {}, format='json')
@@ -124,7 +126,7 @@ class ItemTests(APITestCase):
         self.client.force_authenticate(user=self.user)
         data = {
             'wish_list': 1,
-            'title':'testItem2',
+            'title': 'testItem2',
             'price': 75,
             'source_url': 'http://www.something.com'
         }
@@ -146,7 +148,7 @@ class ItemTests(APITestCase):
                       kwargs={'pk': self.item.id})
         self.client.force_authenticate(user=self.user)
         response = self.client.patch(url, {"title": "New Title"},
-                                          format='json')
+                                     format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['title'], 'New Title')
 
@@ -185,64 +187,3 @@ class PledgeTests(APITestCase):
         self.assertEqual(response.data['count'], 1)
         response_pledge = response.data['results'][0]
         self.assertEqual(response_pledge['charge_id'], self.pledge.charge_id)
-
-
-
-# class ChirpTests(APITestCase):
-#
-#     def setUp(self):
-#         self.user = User.objects.create_user('test1', email='test@test.com',
-#                                              password='password')
-#
-#
-#     def test_chirp_list(self):
-#         chirp = Chirp.objects.create(title='Chirp Title',
-#                                      message='Chirp Message', author=self.user)
-#         url = reverse('api_chirp_list_create')
-#         response = self.client.get(url, {}, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['count'], 1)
-#         response_chirp = response.data['results'][0]
-#         self.assertEqual(response_chirp['title'], chirp.title)
-#
-#     def test_chirp_list_request(self):
-#         chirp = Chirp.objects.create(title='Chirp Title',
-#                                      message='Chirp Message', author=self.user)
-#         url = reverse('api_chirp_list_create')
-#         view = ListCreateChirp.as_view()
-#         factory = APIRequestFactory()
-#         request = factory.get(url, {}, format='json')
-#         response = view(request)
-#
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['count'], 1)
-#         response_chirp = response.data['results'][0]
-#         self.assertEqual(response_chirp['title'], chirp.title)
-#
-#     def test_create_chirp(self):
-#
-#         url = reverse('api_chirp_list_create')
-#         data = {'title':'Test Chrip 1', 'message':'Test Chirp 1'}
-#         self.client.force_authenticate(user=self.user)
-#         response = self.client.post(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertEqual(Chirp.objects.count(), 1)
-#         self.assertEqual(self.user.id, response.data['author'])
-#
-#     def test_list_chirp_username_filter(self):
-#         chirp = Chirp.objects.create(title='Chirp Title',
-#                                      message='Chirp Message', author=self.user)
-#         user2 = User.objects.create_user('test2', email='test2@test.com',
-#                                              password='password')
-#         chirp2 = Chirp.objects.create(title='Chirp Title2',
-#                                      message='Chirp Message2', author=user2)
-#
-#         url = reverse('api_chirp_list_create')
-#
-#         response = self.client.get(url, {'username': user2.username},
-#                                    format='json')
-#
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['count'], 1)
-#         chirp_response = response.data['results'][0]
-#         self.assertEqual(chirp_response['author'], user2.id)

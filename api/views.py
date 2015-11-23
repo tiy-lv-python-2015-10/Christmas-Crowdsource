@@ -1,13 +1,13 @@
-from api.permissions import IsOwnerOrReadOnly
 from christmas_crowdsource.settings import STRIPE_API_KEY
-from rest_framework import permissions
 from api.serializers import UserSerializer, WishListSerializer, ItemSerializer, \
     PledgeSerializer, CreatePledgeSerializer
 from christmas_list.models import WishList, Item, Pledge
 from django.contrib.auth.models import User
-from django.shortcuts import render
 from rest_framework import generics
 import stripe
+from django.shortcuts import render
+from rest_framework import permissions
+from api.permissions import IsOwnerOrReadOnly
 
 
 class ListUsers(generics.ListAPIView):
@@ -30,7 +30,8 @@ class ListCreateWishLists(generics.ListCreateAPIView):
         serializer.save(user=user)
 
     def get_queryset(self):
-        qs =  super().get_queryset()
+        """Return list for user only"""
+        qs = super().get_queryset()
         user_id = self.request.query_params.get('user-id', None)
         if user_id:
             qs = qs.filter(user__id=user_id)
@@ -44,13 +45,13 @@ class ListCreateItems(generics.ListCreateAPIView):
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
 
-
 class ListPledges(generics.ListAPIView):
     queryset = Pledge.objects.all()
     serializer_class = PledgeSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
+        """Return Pledges for user only"""
         qs = super().get_queryset()
         user_id = self.request.query_params.get('user-id', None)
         if user_id:
@@ -61,15 +62,8 @@ class ListPledges(generics.ListAPIView):
 class DetailUpdateWishList(generics.RetrieveUpdateDestroyAPIView):
     queryset = WishList.objects.all()
     serializer_class = WishListSerializer
-
-    def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
-
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly)
-
-    def perform_update(self, serializer):
-        super().perform_update(serializer)
 
 
 class DetailUpdateItem(generics.RetrieveUpdateDestroyAPIView):
@@ -89,6 +83,12 @@ class CreatePledge(generics.CreateAPIView):
     serializer_class = CreatePledgeSerializer
 
     def stripe_charge(self, token, amount):
+        """
+        Create charge wish stripe token
+        :param token: stripe token passed from serializer.initial_data
+        :param amount: amount passed from serializer.initial_data
+        :return: Return charge_id for Refund use.
+        """
         stripe.api_key = STRIPE_API_KEY
         if isinstance(amount, str):
             amount = float(amount)
@@ -109,10 +109,16 @@ class CreatePledge(generics.CreateAPIView):
 
         except stripe.error.CardError as e:
             # The card has been declined
+            """ACTION HERE"""
             pass
 
-
     def perform_create(self, serializer):
+        """
+        Create the pledge. Check to see if item of the pledge is now fully
+        funded.
+        :param serializer:
+        :return:
+        """
         user = self.request.user
         item_id = self.kwargs['pk']
         item = Item.objects.get(pk=item_id)

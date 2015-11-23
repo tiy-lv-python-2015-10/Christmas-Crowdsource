@@ -19,6 +19,10 @@ class WishList(models.Model):
         return "{}'s wishlist".format(self.user.username)
 
     def close(self):
+        """ Called from Commands if expired. Calls items which in turn call
+        pledges to refund themselves.
+        :return:
+        """
         for item in self.item_set.all():
             item.refund_pledges()
         self.is_expired = True
@@ -59,6 +63,7 @@ class Item(models.Model):
         self.is_closed = True
         self.save()
 
+
 class Pledge(models.Model):
     user = models.ForeignKey(User)
     item = models.ForeignKey(Item)
@@ -71,6 +76,7 @@ class Pledge(models.Model):
         return "{}'s pledge: ${}".format(self.user, self.amount)
 
     def refund(self):
+        """Stripe refund created"""
         stripe.api_key = STRIPE_API_KEY
         stripe.Refund.create(
           charge=self.charge_id
