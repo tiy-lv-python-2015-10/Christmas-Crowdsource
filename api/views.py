@@ -1,4 +1,5 @@
 from api.permissions import IsOwnerOrReadOnly
+from christmas_crowdsource.settings import STRIPE_API_KEY
 from rest_framework import permissions
 from api.serializers import UserSerializer, WishListSerializer, ItemSerializer, \
     PledgeSerializer, CreatePledgeSerializer
@@ -89,6 +90,7 @@ class CreatePledge(generics.CreateAPIView):
     serializer_class = CreatePledgeSerializer
 
     def stripe_charge(self, token, amount):
+        stripe.api_key = STRIPE_API_KEY
         if isinstance(amount, str):
             amount = float(amount)
         amount *= 100
