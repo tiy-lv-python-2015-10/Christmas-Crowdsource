@@ -21,5 +21,6 @@ class ItemSerializer(serializers.ModelSerializer):
 class PledgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pledge
+        user = serializers.ReadOnlyField(source='user.id')
         fields = ('user', 'item', 'pledge_amount', 'created_at', 'modified_at')
         read_only_fields = ('user', 'created_at', 'modified_at')

@@ -70,7 +70,8 @@ class APIListCreatePledge(generics.ListCreateAPIView):
     # search_fields = ('posting_title', 'specific_location', 'posting_body')
 
     def perform_create(self, serializer):
-        serializer.save()
+        user = self.request.user
+        serializer.save(user=user)
 
 
 class APIDetailUpdatePledge(generics.RetrieveUpdateDestroyAPIView):
