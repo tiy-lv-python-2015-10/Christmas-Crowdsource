@@ -43,8 +43,8 @@ class ShortItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'title', 'price', 'image_url', 'total_pledged',
-                  'amount_needed')
+        fields = ('id', 'title', 'price', 'image_url', 'is_funded',
+                  'total_pledged', 'amount_needed')
         read_ony_fields = '__all__'
 
 

@@ -65,7 +65,6 @@ class DetailUpdateWishList(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
-
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly)
 
