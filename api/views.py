@@ -44,10 +44,9 @@ class ListCreateItems(generics.ListCreateAPIView):
     serializer_class = ItemSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
-    def perform_create(self, serializer):
-        item_url = serializer.initial_data['source_url']
-        b = re.search(r'\bamazon.com\b', item_url).group(0)
-        super().perform_create(serializer)
+    # def perform_create(self, serializer):
+    #     item_url = serializer.initial_data['source_url']
+    #     super().perform_create(serializer)
 
     def get_amazon_id(self, item_url):
         pass
