@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/fredoflynn/Christmas-Crowdsource.svg?branch=master)](https://travis-ci.org/fredoflynn/Christmas-Crowdsource)
+
+[![Coverage Status](https://coveralls.io/repos/fredoflynn/Christmas-Crowdsource/badge.svg?branch=master&service=github)](https://coveralls.io/github/fredoflynn/Christmas-Crowdsource?branch=master)
+
 # Christmas List Crowdsource - Backend
 
 ## Description
@@ -5,7 +9,7 @@ The overall project is basically a wish list generator.
 * A user can create a list
 * The list owner can then share a link with friends and family
 * Visitors will be able to pledge to buy an item or pledge to pay for part of it
-* Once an item is fully pledged it becomes reserved 
+* Once an item is fully pledged it becomes reserved
 * The owner will never see what is reserved and what is not (we want it to be a surprise)
 * When a person pledges they will be prompted for a credit card which will be processed through stripe
 * When a list deadline passes the list is set to inactive and all partially funded items are refunded (otherwise it is embezzlement)
@@ -57,7 +61,7 @@ As the backend your job in the group is to provide the front end with api endpoi
 * For any links that are amazon based pull out the unique id from the URL and store it in the model
 	* Hint: Regex would be good
 	* Hint: It is the alpha numeric string after bp/
-* Using the unique id and the amazon product api get the price and quantity of the product available. 
+* Using the unique id and the amazon product api get the price and quantity of the product available.
 	* [Affiliate Program](https://affiliate-program.amazon.com)
 	* [Product API](https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html)
 	* [Python Library](https://python-amazon-product-api.readthedocs.org/en/latest/index.html)
