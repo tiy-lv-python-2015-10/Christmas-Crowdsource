@@ -1,3 +1,4 @@
+import re
 from christmas_crowdsource.settings import STRIPE_API_KEY
 from api.serializers import UserSerializer, WishListSerializer, ItemSerializer, \
     PledgeSerializer, CreatePledgeSerializer
@@ -41,8 +42,15 @@ class ListCreateWishLists(generics.ListCreateAPIView):
 class ListCreateItems(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    def perform_create(self, serializer):
+        item_url = serializer.initial_data['source_url']
+        b = re.search(r'\bamazon.com\b', item_url).group(0)
+        super().perform_create(serializer)
+
+    def get_amazon_id(self, item_url):
+        pass
 
 
 class ListPledges(generics.ListAPIView):
